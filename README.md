@@ -3,8 +3,6 @@
 A FastAPI-based project to calculate ATS (Applicant Tracking System) scores by comparing parsed resumes with job descriptions.  
 Uses **hybrid NLP + ML techniques** (keyword matching + embeddings + optional LLM) for skill extraction and scoring.
 
----
-
 ## 📂 Project Structure
 
 ATS-Scanner/
@@ -19,8 +17,6 @@ ATS-Scanner/
 │── requirements.txt
 │── README.md
 │── .gitignore
-
----
 
 ## ⚡ Setup & Run
 
