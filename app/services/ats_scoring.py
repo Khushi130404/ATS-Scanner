@@ -1,13 +1,16 @@
 from app.services.llm_skill_extractor import extract_skills_from_jd
+from app.utils.resume_utils import get_resume_skills
 
-def score_resume(resume: dict, job_description: str) -> dict:
-    resume_skills = [s.lower() for s in resume.get("skills", [])]
+def score_resume(resume_json: dict, job_description: str) -> dict:
+    """
+    Score resume based on matched skills from JD.
+    """
+    resume_skills = get_resume_skills(resume_json)
 
-    # LLM extracts required skills from JD
     required_skills = [s.lower() for s in extract_skills_from_jd(job_description)]
 
-    # Matching
     matched_skills = list(set(resume_skills) & set(required_skills))
+
     score = round((len(matched_skills) / len(required_skills)) * 100, 2) if required_skills else 0
 
     return {

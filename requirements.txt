@@ -1,17 +1,8 @@
-# FastAPI framework
 fastapi==0.111.0
-
-# ASGI server
 uvicorn[standard]==0.30.1
-
-# NLP + ML tools
-spacy==3.7.5
+spacy==3.7.2
 scikit-learn==1.5.1
-sentence-transformers==3.0.1
-
-# Data handling
-pandas==2.2.2
+transformers==4.43.3
+torch==2.3.1
+pydantic==2.7.4
 numpy==1.26.4
-
-# For testing
-pytest==8.3.2
