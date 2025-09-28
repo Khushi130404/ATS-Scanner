@@ -1,6 +1,7 @@
-def get_resume_skills(parsed_resume: dict) -> list:
+from app.model.schema import Resume
+
+def get_resume_skills(resume: Resume) -> list:
     """
-    Extract skills from parsed resume JSON.
+    Extract skills from parsed resume object.
     """
-    skills = parsed_resume.get("extracted_data", {}).get("skills", [])
-    return [s.lower() for s in skills]
+    return [s.lower() for s in resume.extracted_data.skills]

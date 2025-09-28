@@ -9,5 +9,4 @@ def ats_score(request: ResumeJobRequest):
     """
     Endpoint to score a resume against a job description.
     """
-    result = score_resume(request.resume, request.job_description)
-    return result
+    return score_resume(request.resume, request.job_description)

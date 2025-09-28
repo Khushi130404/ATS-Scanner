@@ -1,7 +1,12 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
+
+class ExtractedData(BaseModel):
+    skills: List[str]
+
+class Resume(BaseModel):
+    extracted_data: ExtractedData
 
 class ResumeJobRequest(BaseModel):
-    resume: dict
+    resume: Resume
     job_description: str
-    skills: Optional[List[str]] = None

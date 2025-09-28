@@ -1,21 +1,45 @@
-from app.services.llm_skill_extractor import extract_skills_from_jd
-from app.utils.resume_utils import get_resume_skills
+from app.utils import resume_utils
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-def score_resume(resume_json: dict, job_description: str) -> dict:
+MODEL_NAME = "google/flan-t5-base"
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
+
+def extract_skills_from_jd(job_description: str) -> list:
     """
-    Score resume based on matched skills from JD.
+    Given a job description, return a list of required skills using LLM.
     """
-    resume_skills = get_resume_skills(resume_json)
+    prompt = f"Extract only the technical skills from the following job description as a JSON array:\n{job_description}\nSkills:"
 
-    required_skills = [s.lower() for s in extract_skills_from_jd(job_description)]
+    inputs = tokenizer(prompt, return_tensors="pt", truncation=True)
+    outputs = model.generate(**inputs, max_length=150)
+    result = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    matched_skills = list(set(resume_skills) & set(required_skills))
+    try:
+        import json
+        skills_list = json.loads(result)
+    except:
+        skills_list = [s.strip() for s in result.split(",")]
 
-    score = round((len(matched_skills) / len(required_skills)) * 100, 2) if required_skills else 0
+    return [s.lower() for s in skills_list]
+
+def score_resume(parsed_resume: dict, job_description: str) -> dict:
+    """
+    Score the resume against the job description.
+    """
+    resume_skills = resume_utils.get_resume_skills(parsed_resume)
+    jd_skills = extract_skills_from_jd(job_description)
+
+    matched_skills = [skill for skill in resume_skills if skill in jd_skills]
+    missing_skills = [skill for skill in jd_skills if skill not in resume_skills]
+
+    score = int((len(matched_skills) / len(jd_skills)) * 100) if jd_skills else 0
 
     return {
         "score": score,
         "matched_skills": matched_skills,
-        "required_skills": required_skills,
-        "total_required_skills": len(required_skills)
+        "missing_skills": missing_skills,
+        "total_resume_skills": len(resume_skills),
+        "total_jd_skills": len(jd_skills)
     }
