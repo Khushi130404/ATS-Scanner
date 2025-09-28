@@ -24,4 +24,5 @@ python -m venv venv
 source venv/bin/activate # On Linux/Mac
 venv\Scripts\activate # On Windows
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --port 8088
+http://127.0.0.1:8088/docs

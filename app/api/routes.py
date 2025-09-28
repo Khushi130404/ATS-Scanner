@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.models.schema import ResumeJobRequest
+from app.model.schema import ResumeJobRequest
 from app.services.ats_scoring import score_resume
 
 router = APIRouter()
