@@ -1,0 +1,3 @@
+We are looking for a Cybersecurity Analyst to join our security operations team. 
+Responsibilities include monitoring and analyzing security events, implementing and maintaining security tools such as firewalls and IDS/IPS, conducting penetration testing, and enforcing security policies. 
+Required skills: Python, PowerShell, SIEM tools (Splunk, ELK, QRadar), ethical hacking, CEH, CISSP.

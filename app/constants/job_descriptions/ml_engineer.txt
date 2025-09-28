@@ -1,0 +1,3 @@
+We are looking for a Machine Learning Engineer to design and deploy ML models for predictive analytics and AI solutions. 
+Responsibilities include feature engineering, model training, deployment, and monitoring performance. 
+Required skills: Python, TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, ML algorithms, cloud ML platforms.

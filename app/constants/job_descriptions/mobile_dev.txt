@@ -1,0 +1,3 @@
+We are looking for a Mobile Application Developer to build and maintain Android and iOS applications. 
+Responsibilities include designing UI/UX, integrating APIs, optimizing app performance, and working with cross-functional teams. 
+Required skills: Kotlin, Java, Swift, React Native, Firebase, REST APIs, Git.
