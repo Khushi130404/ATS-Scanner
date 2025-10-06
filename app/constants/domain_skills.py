@@ -64,14 +64,11 @@ WEB_DEV_SKILLS = [
 CLOUD_COMPUTING_SKILLS = [
     "aws",
     "azure",
-    "gcp",
     "docker",
     "kubernetes",
-    "terraform",
     "cloudformation",
     "ci/cd",
     "jenkins",
-    "ansible"
 ]
 
 MOBILE_DEV_SKILLS = [
