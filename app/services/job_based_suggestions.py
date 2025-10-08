@@ -23,29 +23,23 @@ def ai_suggestions(input_data: Dict[str, Any], client: Optional[genai.Client] = 
         and detailed suggestions, or an error dictionary.
     """
     
-    # --- CRITICAL FALLBACK LOGIC ---
     if client is None:
         try:
-            # Attempt to initialize client using environment variable
-            load_dotenv() # Load .env file contents to make sure GEMINI_API_KEY is available
+            load_dotenv() 
             api_key = os.environ.get("GEMINI_API_KEY")
             if not api_key:
                 return {"error": "API Client not provided, and GEMINI_API_KEY environment variable is missing for fallback."}
             client = genai.Client(api_key=api_key)
         except Exception as e:
             return {"error": f"Failed to initialize Gemini client during fallback: {e}"}
-    # --- END FALLBACK LOGIC ---
 
     try:
-        # 1. Extract and Prepare Data
         resume_data = input_data.get("resume", {}).get("extracted_data", {})
         job_desc_text = input_data.get("job_description", "")
         
-        # Check if essential data is missing
         if not resume_data or not job_desc_text:
             return {"error": "Missing 'resume' extracted data or 'job_description' text in input."}
 
-        # Convert the structured resume data to a readable string for the model
         data_for_prompt = {
             "Skills": resume_data.get("skills", []),
             "Experience": [
@@ -62,7 +56,6 @@ def ai_suggestions(input_data: Dict[str, Any], client: Optional[genai.Client] = 
     except (KeyError, AttributeError) as e:
         return {"error": f"Input data structure is incorrect: {e}"}
 
-    # --- 2. Construct the Comprehensive Prompt ---
     prompt = f"""
     You are an expert Resume Analyst. Your task is to perform two actions based on the provided data:
     
@@ -97,9 +90,7 @@ def ai_suggestions(input_data: Dict[str, Any], client: Optional[genai.Client] = 
     Ensure the advice is professional, encouraging, and highly specific to the content provided, guiding the user on rephrasing their existing experience to align better with the security role.
     """
     
-    # --- 3. Call the Gemini API with JSON Output Constraint ---
     try:
-        # The 'client' is now guaranteed to be initialized here (either passed or created).
         response = client.models.generate_content(
             model='gemini-2.5-flash',
             contents=prompt,
